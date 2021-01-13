@@ -58,15 +58,24 @@ final class LiveViewController: UIViewController {
             .continuousExposure: true
             // .preferredVideoStabilizationMode: AVCaptureVideoStabilizationMode.auto
         ]
+        /*
         rtmpStream.videoSettings = [
             .width: 720,
             .height: 1280
         ]
+         */
+        rtmpStream.videoSettings = [
+            .width: 1280,
+            .height: 720
+        ]
+        
+        rtmpStream.videoSettings[.bitrate] = 1024000.0
+        rtmpStream.audioSettings[.bitrate] = 160000.0
         rtmpStream.mixer.recorder.delegate = ExampleRecorderDelegate.shared
-
+        
         videoBitrateSlider?.value = Float(RTMPStream.defaultVideoBitrate) / 1000
         audioBitrateSlider?.value = Float(RTMPStream.defaultAudioBitrate) / 1000
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(on(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
